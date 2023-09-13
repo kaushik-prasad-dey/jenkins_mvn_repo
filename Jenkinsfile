@@ -4,21 +4,23 @@ pipeline {
         stage('Fetch Code') {
             steps {
                 // Check out your source code from your version control system (e.g., Git)
-                git branch: 'master', url:'https://github.com/edureka-git/DevOpsClassCodes.git'
+                git branch: 'main', url:'https://github.com/kaushik-prasad-dey/jenkins_mvn_repo.git'
             }
         }
         stage('Build') {
             steps {
                 // Build your application here
                 withMaven(maven: 'Maven3') {
-            sh "mvn clean package"
-        }
+                     sh "mvn install"
+                }
             }
         }
         stage('Test') {
             steps {
                 // Run your tests here
-                sh 'mvn test' // Example for a Maven project
+                withMaven(maven: 'Maven3') {
+                    sh 'mvn test' // Example for a Maven project    
+                }
             }
         }
     }
